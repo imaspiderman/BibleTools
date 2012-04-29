@@ -42,6 +42,9 @@ public final class BibleObjectLoader {
                 iChap = Integer.parseInt(sParts[2]);
                 iVers = Integer.parseInt(sParts[3]);
                 sTextRtf = sParts[4];
+                
+                //Strip out rtf fields
+                sTextRtf = sTextRtf.replaceAll("\\{[^\\[]*\\[([^\\]]*)[^\\}]*\\}", "$1");
 
                 //These are the references
                 if(inBible.getBook(iBook)!=null){
