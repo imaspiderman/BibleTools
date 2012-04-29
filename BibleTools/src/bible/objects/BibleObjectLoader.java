@@ -43,7 +43,7 @@ public final class BibleObjectLoader {
                 iVers = Integer.parseInt(sParts[3]);
                 sTextRtf = sParts[4];
                 
-                //Strip out rtf fields
+                //Strip out rtf fields of the format {<bunch of codes>[text to keep]<usually nothing>}
                 sTextRtf = sTextRtf.replaceAll("\\{[^\\[]*\\[([^\\]]*)[^\\}]*\\}", "$1");
 
                 //These are the references
