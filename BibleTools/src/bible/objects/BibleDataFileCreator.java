@@ -30,6 +30,7 @@ public class BibleDataFileCreator {
 			java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(gso);
 			
 			oos.writeObject(_bible);
+			oos.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
