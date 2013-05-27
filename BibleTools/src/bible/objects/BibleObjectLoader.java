@@ -15,6 +15,19 @@ public final class BibleObjectLoader {
 
     public BibleObjectLoader(){
     }
+    
+    public void loadBibleDataObject(Bible inBible, String sFileName){
+    	try {
+			java.io.FileInputStream fis = new java.io.FileInputStream(sFileName);
+			java.util.zip.GZIPInputStream gsi = new java.util.zip.GZIPInputStream(fis);
+			java.io.ObjectInputStream ois = new java.io.ObjectInputStream(gsi);
+			
+			inBible = (Bible)ois.readObject();
+			ois.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
     public void loadBibleObjects(Bible inBible, String sFileName){
         LoadBible(inBible,sFileName);
