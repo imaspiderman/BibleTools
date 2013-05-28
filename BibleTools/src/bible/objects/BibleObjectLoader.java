@@ -16,13 +16,13 @@ public final class BibleObjectLoader {
     public BibleObjectLoader(){
     }
     
-    public void loadBibleDataObject(Bible inBible, String sFileName){
-    	try {
-			java.io.FileInputStream fis = new java.io.FileInputStream(sFileName);
-			java.util.zip.GZIPInputStream gsi = new java.util.zip.GZIPInputStream(fis);
+    public void loadBibleDataObject(Bible inBible, java.io.InputStream sStream){
+    	try {			
+			java.util.zip.GZIPInputStream gsi = new java.util.zip.GZIPInputStream(sStream);
 			java.io.ObjectInputStream ois = new java.io.ObjectInputStream(gsi);
 			
 			inBible = (Bible)ois.readObject();
+			gsi.close();
 			ois.close();
 		} catch (Exception e) {
 			e.printStackTrace();
