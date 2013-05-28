@@ -5,8 +5,6 @@
 
 package bible.objects;
 
-import java.io.FileNotFoundException;
-
 /**
  *
  * @author greg
@@ -16,28 +14,62 @@ public final class BibleObjectLoader {
     public BibleObjectLoader(){
     }
     
-    public void loadBibleDataObject(Bible inBible, java.io.InputStream sStream){
+    public Object loadBibleDataObject(java.io.InputStream sStream){
+    	Object newObject = new Object();
     	try {			
-			java.util.zip.GZIPInputStream gsi = new java.util.zip.GZIPInputStream(sStream);
-			java.io.ObjectInputStream ois = new java.io.ObjectInputStream(gsi);
+    		java.util.zip.GZIPInputStream gis = new java.util.zip.GZIPInputStream(sStream);
+    		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(gis);
 			
-			inBible = (Bible)ois.readObject();
-			gsi.close();
+			newObject = ois.readObject();			
 			ois.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    	
+    	return newObject;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public java.util.HashMap<Integer, String> loadBibleHashMap(java.io.InputStream sStream){
+    	java.util.HashMap<Integer, String> map = new java.util.HashMap<Integer, String>();
+    	try {			
+    		java.util.zip.GZIPInputStream gis = new java.util.zip.GZIPInputStream(sStream);
+			java.io.ObjectInputStream ois = new java.io.ObjectInputStream(gis);
+			
+			map = (java.util.HashMap<Integer, String>)ois.readObject();
+			ois.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	return map;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public java.util.HashMap<Integer, Integer> loadBibleHashMapKey(java.io.InputStream sStream){
+    	java.util.HashMap<Integer, Integer> map = new java.util.HashMap<Integer, Integer>();
+    	try {			
+    		java.util.zip.GZIPInputStream gis = new java.util.zip.GZIPInputStream(sStream);
+			java.io.ObjectInputStream ois = new java.io.ObjectInputStream(gis);
+			
+			map = (java.util.HashMap<Integer, Integer>)ois.readObject();
+			ois.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	return map;
     }
 
-    public void loadBibleObjects(Bible inBible, String sFileName){
+    public void loadBibleObjects(Bible inBible, java.io.InputStream sFileName){
         LoadBible(inBible,sFileName);
     }
 
-    private void LoadBible(Bible inBible, String sFileName){
+    private void LoadBible(Bible inBible, java.io.InputStream sStream){
         java.io.BufferedReader bReader = null;
         try {
-            bReader = new java.io.BufferedReader(new java.io.FileReader(sFileName));     
-        } catch (FileNotFoundException ex) {
+            bReader = new java.io.BufferedReader(new java.io.InputStreamReader(sStream));     
+        } catch (Exception ex) {
             System.console().writer().println(ex.toString());
         }
 
