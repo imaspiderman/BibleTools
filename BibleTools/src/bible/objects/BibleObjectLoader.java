@@ -5,6 +5,8 @@
 
 package bible.objects;
 
+import java.util.Collections;
+
 /**
  *
  * @author greg
@@ -79,10 +81,25 @@ public final class BibleObjectLoader {
         int iChap = 0;
         int iVers = 0;
         String sTextRtf = "";
+        java.util.ArrayList<String> aBible = new java.util.ArrayList<String>();
+        
         //For kjb.txt 0 = line number 1 = book 2 = chapter 3 = verse 4 = verse text
         try{
-            while((sLine = bReader.readLine()) != null){
-                sParts = sLine.split("\\t");
+        	while((sLine=bReader.readLine()) != null){
+        		aBible.add(sLine);
+        	}
+        	
+        	Collections.sort(aBible, new java.util.Comparator<String>(){
+        		public int compare(String s1, String s2){
+        			int cp1 = Integer.parseInt(s1.split("\t")[0]);
+        			int cp2 = Integer.parseInt(s2.split("\t")[0]);
+        			
+        			return (cp1>cp2)?(1):(-1);
+        		}
+        	});
+        	
+            for(String sVerse : aBible){
+                sParts = sVerse.split("\\t");
                 iBook = Integer.parseInt(sParts[1]);
                 iChap = Integer.parseInt(sParts[2]);
                 iVers = Integer.parseInt(sParts[3]);
